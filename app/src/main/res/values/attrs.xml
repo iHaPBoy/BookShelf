@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ViewPagerIndicator">
+        <!--可见tab数量-->
+        <attr name="tab_visible_count" format="integer" />
+        <!--tab标签文字大小(sp)-->
+        <attr name="tab_text_size" format="integer" />
+        <!--正常字体颜色-->
+        <attr name="tab_text_normal_color" format="color" />
+        <!--高亮字体颜色-->
+        <attr name="tab_text_highlight_color" format="color" />
+        <!--横线颜色-->
+        <attr name="tab_line_color" format="color" />
+        <!--横线高度(dp)-->
+        <attr name="tab_line_height" format="integer" />
+    </declare-styleable>
+</resources>

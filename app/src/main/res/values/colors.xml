@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="colorAccent">#009688</color>
+
+    <color name="colorBg">#FFFFFF</color>
+    <color name="colorTagFont">#FFFFFF</color>
+    <color name="colorPrimaryFont">#9B9B9B</color>
+
+    <color name="tab_color_text_normal">#99E6EF</color>
+    <color name="tab_color_text_highlight">#FFFFFF</color>
+    <color name="tab_color_line">#FFFF8C</color>
+
+    <color name="fab_menu_colorNormal">#00BCD4</color>
+    <color name="fab_menu_colorPressed">#0097A7</color>
+    <color name="fab_menu_colorRipple">#00c3d7</color>
+</resources>
