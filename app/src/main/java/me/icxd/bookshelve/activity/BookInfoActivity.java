@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import org.litepal.crud.DataSupport;
 
@@ -47,11 +48,17 @@ public class BookInfoActivity extends AppCompatActivity {
     // Fragment
     private List<Fragment> mContents = new ArrayList<Fragment>();
 
+    // Book
     private long itemId;
     private Book book;
 
-    private Menu menu;
+    // FavoriteMenu
     private int iconFavorite[] = {R.drawable.ic_favorite_border_white_24dp, R.drawable.ic_favorite_white_24dp};
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +107,13 @@ public class BookInfoActivity extends AppCompatActivity {
         ImageView ivBookCover = (ImageView) findViewById(R.id.book_cover);
         ImageView ivBookCoverBg = (ImageView) findViewById(R.id.book_cover_bg);
 
+        // 返回按钮
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // Activity标题
         setTitle(book.getTitle());
 
         if (book != null) {
@@ -149,8 +159,7 @@ public class BookInfoActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.book_info_menu, menu);
-        this.menu = menu;
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

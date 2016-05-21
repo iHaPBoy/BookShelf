@@ -22,10 +22,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);                // Set the scanner view as the content view
 
+        // 返回按钮
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // Activity标题
         setTitle("扫一扫");
     }
 

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("INFO", "onCreate");
+        Log.i("INFO", "onCreate");
         setContentView(R.layout.activity_main);
 
         // 顶部ToolBar

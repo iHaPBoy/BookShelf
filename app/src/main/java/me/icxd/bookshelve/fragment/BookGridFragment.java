@@ -32,6 +32,7 @@ import me.icxd.bookshelve.adapter.BookGridAdapter;
 import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.util.Boom;
 import me.icxd.bookshelve.util.BoomB;
+import tyrantgit.explosionfield.ExplosionField;
 
 public class BookGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -45,7 +46,7 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
     private BookGridAdapter bookGridAdapter; // 数据适配器
     private int gridPosition = -1; // 选中项的position
     private View gridItemView = null; // 选中项的view
-    private Boom mExplosionField; // 爆炸
+    private ExplosionField mExplosionField; // 爆炸
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -72,7 +73,7 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
         if (getArguments() != null) {
             mType = getArguments().getInt(ARG_TYPE);
         }
-        mExplosionField = BoomB.attach2Window(getActivity());
+        mExplosionField = ExplosionField.attach2Window(getActivity());
     }
 
     @Override
@@ -209,7 +210,7 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
                                     fetchData();
                                     bookGridAdapter.notifyDataSetChanged();
                                 }
-                            }, 500);
+                            }, 1000);
 //                            sDialog
 //                                    .setTitleText("删除成功")
 //                                    .setContentText("全部图书已被成功删除。")
@@ -229,9 +230,9 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
     public void fetchData() {
         Log.i("HB", mType + "GridFragment.fetchData");
         if (mType == TYPE_FAVORITE) {
-            bookGridAdapter.setData(DataSupport.where("favourite = ?", "1").find(Book.class));
+            bookGridAdapter.setData(DataSupport.where("favourite = ?", "1").order("id desc").find(Book.class));
         } else {
-            bookGridAdapter.setData(DataSupport.findAll(Book.class));
+            bookGridAdapter.setData(DataSupport.order("id desc").find(Book.class));
         }
     }
 

@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="14dp"
     tools:context="me.icxd.bookshelve.fragment.BookNoteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="14dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="编辑笔记" />
+            <ImageView
+                android:id="@+id/iv_icon_date"
+                android:layout_width="16dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                app:ico_color="@color/colorPrimaryFont"
+                app:ico_icon="gmd-date-range"
+                app:ico_size="16dp" />
 
             <TextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/btn_edit"
-                android:layout_alignParentLeft="true"
-                android:text="日期" />
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@id/iv_icon_date"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/iv_icon_date"
+                android:gravity="center_vertical"
+                android:text="日期"
+                android:textColor="@color/colorPrimaryFont" />
+
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="16dp"
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@id/iv_icon_date"
+                android:layout_alignParentRight="true"
+                app:ico_color="@color/colorPrimaryFont"
+                app:ico_icon="gmd-mode-edit"
+                app:ico_size="16dp" />
         </RelativeLayout>
 
         <TextView
@@ -36,6 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryContentBg"
+            android:textColor="@color/colorPrimaryContentFont"
+            android:padding="10dp"
             android:text="笔记" />
     </LinearLayout>
 

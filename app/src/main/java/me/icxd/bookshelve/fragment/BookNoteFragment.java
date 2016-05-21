@@ -3,14 +3,20 @@ package me.icxd.bookshelve.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 
 import org.litepal.crud.DataSupport;
 
@@ -27,7 +33,10 @@ import me.icxd.bookshelve.model.bean.Book;
 public class BookNoteFragment extends Fragment {
     private long mItemId = 1;
     private static final String ARG_ITEM_ID = "item_id";
-    private List<Map<String, Object>> data;
+
+    private TextView tvContent;
+    private TextView tvDate;
+    private ImageView ivIconDate;
 
     public static BookNoteFragment newInstance(long itemId) {
         BookNoteFragment fragment = new BookNoteFragment();
@@ -49,32 +58,51 @@ public class BookNoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentPanel = inflater.inflate(R.layout.fragment_book_note, container, false);
 
-        TextView tvContent = (TextView) contentPanel.findViewById(R.id.tv_content);
-        TextView tvDate = (TextView) contentPanel.findViewById(R.id.tv_date);
-        Button btnEdit = (Button) contentPanel.findViewById(R.id.btn_edit);
+        tvContent = (TextView) contentPanel.findViewById(R.id.tv_content);
+        tvDate = (TextView) contentPanel.findViewById(R.id.tv_date);
+        ivIconDate = (ImageView) contentPanel.findViewById(R.id.iv_icon_date);
 
-        // 图书数据
-        Book book = DataSupport.find(Book.class, mItemId);
-
-        String note = book.getNote();
-        String note_date = book.getNote_date();
-        if (note.isEmpty()) {
-            note = "暂无笔记";
-        }
-        tvContent.setText(note);
-        tvDate.setText(note_date);
-
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        // Edit Button
+        ImageView ivEdit = (ImageView) contentPanel.findViewById(R.id.iv_edit);
+        ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BookNoteEditActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putLong("item_id", mItemId);
+                bundle.putLong("id", mItemId);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
         return contentPanel;
+    }
+
+    public void loadData() {
+        // 图书数据
+        Book book = DataSupport.find(Book.class, mItemId);
+
+        String note = book.getNote();
+        String note_date = book.getNote_date();
+
+        if (note.isEmpty()) {
+            note = "\n暂无笔记，点击右上角的按钮开始写笔记吧！\n";
+        }
+        tvContent.setText(note);
+
+        if (note_date.isEmpty()) {
+            ivIconDate.setAlpha(0f);
+            tvContent.setGravity(Gravity.CENTER);
+        } else {
+            ivIconDate.setAlpha(1f);
+            tvContent.setGravity(Gravity.NO_GRAVITY);
+        }
+        tvDate.setText(note_date);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 }

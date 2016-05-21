@@ -7,6 +7,9 @@
     <color name="colorBg">#FFFFFF</color>
     <color name="colorTagFont">#FFFFFF</color>
     <color name="colorPrimaryFont">#9B9B9B</color>
+    <color name="colorPrimaryContentFont">#727272</color>
+    <color name="colorPrimaryContentBg">#f8f8f8</color>
+
 
     <color name="colorEmptyIcon">#bcbcbc</color>
     <color name="colorEmptyText">#bcbcbc</color>
