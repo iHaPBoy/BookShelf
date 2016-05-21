@@ -1,19 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.icxd.bookshelve.fragment.BookGridFragment"
-    android:orientation="vertical">
+    tools:context="me.icxd.bookshelve.fragment.BookGridFragment">
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:horizontalSpacing="0dp"
         android:listSelector="@android:color/transparent"
         android:numColumns="3"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp">
+        android:verticalSpacing="0dp" />
 
-    </GridView>
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:ico_color="@color/colorEmptyIcon"
+            app:ico_icon="gmd-import_contacts"
+            app:ico_size="48dp" />
+
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="暂无记录"
+            android:textColor="@color/colorEmptyText"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

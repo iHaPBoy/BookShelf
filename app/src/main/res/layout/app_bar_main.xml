@@ -46,7 +46,7 @@
             style="@style/MenuButtonsSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_camera"
+            android:src="@drawable/ic_aspect_ratio_white_24dp"
             fab:fab_label="扫一扫"
             fab:fab_size="mini" />
 
@@ -55,7 +55,7 @@
             style="@style/MenuButtonsSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu_gallery"
+            android:src="@drawable/ic_mode_edit_white_24dp"
             fab:fab_label="添加"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>

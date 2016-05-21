@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +31,7 @@ public class BookGridAdapter extends BaseAdapter {
     private List<Book> mData;
     private LayoutInflater mInflater;
 
-    public BookGridAdapter(List<Book> mData, Context context) {
-        this.mData = mData;
+    public BookGridAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -51,6 +51,8 @@ public class BookGridAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
+//        Log.e("HB_ADAPTER", "mData.size: " + mData.size() + "; position: " + position + ";");
+//        return 0;
         return mData.get(position).getId();
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="me.icxd.bookshelve">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,11 +12,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +26,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BookInfoActivity" />
-        <activity android:name=".activity.ScannerActivity" />
-        <activity android:name=".activity.Douban2dbActivity" />
+        <activity
+            android:name=".activity.BookInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ScannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.Douban2dbActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SearchActivity"
-            />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BookNoteEditActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

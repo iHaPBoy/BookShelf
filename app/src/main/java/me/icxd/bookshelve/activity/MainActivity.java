@@ -1,14 +1,20 @@
 package me.icxd.bookshelve.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +24,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +35,8 @@ import java.util.List;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.fragment.BookGridFragment;
 import me.icxd.bookshelve.fragment.MyFragment;
+import me.icxd.bookshelve.model.bean.DoubanBook;
+import me.icxd.bookshelve.model.data.DataManager;
 import me.icxd.bookshelve.view.ViewPagerIndicator;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,37 +53,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<Fragment> mContents = new ArrayList<Fragment>();
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("INFO", "onCreate");
         setContentView(R.layout.activity_main);
 
         // 顶部ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FloatingActionMenu fab = (FloatingActionMenu) findViewById(R.id.fabmenu);
+        // 右下角菜单
+        final FloatingActionMenu fabMenu = (FloatingActionMenu) findViewById(R.id.fabmenu);
+        fabMenu.setClosedOnTouchOutside(true);
 
         // 右下角按钮
-        final FloatingActionButton fab_scanner = (FloatingActionButton) findViewById(R.id.fab_scanner);
-        fab_scanner.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton fabBtnScanner = (FloatingActionButton) findViewById(R.id.fab_scanner);
+        fabBtnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fab.close(true);
+                fabMenu.close(true);
                 Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
                 startActivity(intent);
             }
         });
-        FloatingActionButton fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab_add.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabBtnAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        fabBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fab.close(true);
+                fabMenu.close(true);
                 Snackbar.make(view, "添加", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                String isbns[] = {"9787508658902", "9787518311293", "9787020105540"};
+                for (String isbn : isbns) {
+                    DataManager.getBookInfo(isbn, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            DoubanBook doubanBook = DataManager.jsonObject2DoubanBook(response);
+                            DataManager.doubanBook2Book(doubanBook).save();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(MainActivity.this, "书籍不存在", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
-        // Menu 按钮
+        // 左上角 Menu 按钮
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -91,9 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mViewPagerIndicator.setTabItemTitles(mTitles);
 
         // Fragment
-        mContents.add(BookGridFragment.newInstance());
-
-        mContents.add(MyFragment.newInstance("收藏"));
+        mContents.add(BookGridFragment.newInstance(BookGridFragment.TYPE_ALL));
+        mContents.add(BookGridFragment.newInstance(BookGridFragment.TYPE_FAVORITE));
 
         // PagerAdapter
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -108,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mViewPager.setAdapter(mPagerAdapter);
         mViewPagerIndicator.setViewPager(mViewPager, 0);
+//        mViewPager.setOffscreenPageLimit(0);
     }
 
     @Override
@@ -167,9 +202,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        ((BookGridFragment) mContents.get(0)).reloadData();
-    }
 }

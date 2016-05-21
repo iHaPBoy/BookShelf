@@ -6,23 +6,28 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".activity.BookInfoActivity">
+
     <LinearLayout
         android:id="@+id/contentPanel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <!--顶部-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:background="#c9c9c9">
 
+            <!--背景-->
             <ImageView
                 android:id="@+id/book_cover_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="BookCoverBg"
                 android:scaleType="centerCrop" />
 
+            <!--图书封面-->
             <ImageView
                 android:id="@+id/book_cover"
                 android:layout_width="160dp"
@@ -30,10 +35,12 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
+                android:contentDescription="BookCover"
                 android:scaleType="centerCrop"
                 android:src="@drawable/book2" />
         </RelativeLayout>
-        <!--tab-->
+
+        <!--ViewPagerIndicator-->
         <me.icxd.bookshelve.view.ViewPagerIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
@@ -47,11 +54,13 @@
             app:tab_text_normal_color="#999999"
             app:tab_text_size="14"
             app:tab_visible_count="2" />
+
         <!--ViewPager-->
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorBg" />
     </LinearLayout>
+
 </ScrollView>

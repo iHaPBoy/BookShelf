@@ -63,6 +63,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

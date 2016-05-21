@@ -8,6 +8,9 @@
     <color name="colorTagFont">#FFFFFF</color>
     <color name="colorPrimaryFont">#9B9B9B</color>
 
+    <color name="colorEmptyIcon">#bcbcbc</color>
+    <color name="colorEmptyText">#bcbcbc</color>
+
     <color name="tab_color_text_normal">#99E6EF</color>
     <color name="tab_color_text_highlight">#FFFFFF</color>
     <color name="tab_color_line">#FFFF8C</color>

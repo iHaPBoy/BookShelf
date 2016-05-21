@@ -1,12 +1,15 @@
 package me.icxd.bookshelve.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.litepal.crud.DataSupport;
@@ -16,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.icxd.bookshelve.activity.BookNoteEditActivity;
 import me.icxd.bookshelve.adapter.BookInfoAdapter;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.model.bean.Book;
@@ -43,9 +47,11 @@ public class BookNoteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_book_note, container, false);
+        View contentPanel = inflater.inflate(R.layout.fragment_book_note, container, false);
 
-        TextView tvContent = (TextView) linearLayout.findViewById(R.id.tv_content);
+        TextView tvContent = (TextView) contentPanel.findViewById(R.id.tv_content);
+        TextView tvDate = (TextView) contentPanel.findViewById(R.id.tv_date);
+        Button btnEdit = (Button) contentPanel.findViewById(R.id.btn_edit);
 
         // 图书数据
         Book book = DataSupport.find(Book.class, mItemId);
@@ -56,6 +62,19 @@ public class BookNoteFragment extends Fragment {
             note = "暂无笔记";
         }
         tvContent.setText(note);
-        return linearLayout;
+        tvDate.setText(note_date);
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), BookNoteEditActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putLong("item_id", mItemId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        return contentPanel;
     }
 }
