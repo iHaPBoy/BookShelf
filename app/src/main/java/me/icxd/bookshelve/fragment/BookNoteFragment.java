@@ -31,17 +31,17 @@ import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.model.bean.Book;
 
 public class BookNoteFragment extends Fragment {
-    private long mItemId = 1;
-    private static final String ARG_ITEM_ID = "item_id";
+    private int mItemId = 1;
+    private static final String ARG_BOOK_ID = "item_id";
 
     private TextView tvContent;
     private TextView tvDate;
     private ImageView ivIconDate;
 
-    public static BookNoteFragment newInstance(long itemId) {
+    public static BookNoteFragment newInstance(int itemId) {
         BookNoteFragment fragment = new BookNoteFragment();
         Bundle args = new Bundle();
-        args.putLong(ARG_ITEM_ID, itemId);
+        args.putInt(ARG_BOOK_ID, itemId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +50,7 @@ public class BookNoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mItemId = getArguments().getLong(ARG_ITEM_ID);
+            mItemId = getArguments().getInt(ARG_BOOK_ID);
         }
     }
 
@@ -68,9 +68,7 @@ public class BookNoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BookNoteEditActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putLong("id", mItemId);
-                intent.putExtras(bundle);
+                intent.putExtra("id", mItemId);
                 startActivity(intent);
             }
         });

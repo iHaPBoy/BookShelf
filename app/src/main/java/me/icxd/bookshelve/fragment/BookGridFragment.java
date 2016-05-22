@@ -125,11 +125,8 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i("HB", "onItemClick:gridPosition: " + position);
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putLong("id", bookGridAdapter.getItemId(position));
-        intent.putExtras(bundle);
+        intent.putExtra("id", (int) bookGridAdapter.getItemId(position));
         startActivity(intent);
     }
 

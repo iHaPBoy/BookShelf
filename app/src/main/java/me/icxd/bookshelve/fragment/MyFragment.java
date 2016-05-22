@@ -37,55 +37,55 @@ public class MyFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.e("MyFragment", "onStart");
+        Log.i("MyFragment", "onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("MyFragment", "onResume");
+        Log.i("MyFragment", "onResume");
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.e("MyFragment", "onViewCreated");
+        Log.i("MyFragment", "onViewCreated");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.e("MyFragment", "onAttach");
+        Log.i("MyFragment", "onAttach");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("MyFragment", "onPause");
+        Log.i("MyFragment", "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.e("MyFragment", "onStop");
+        Log.i("MyFragment", "onStop");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("MyFragment", "onDestroy");
+        Log.i("MyFragment", "onDestroy");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.e("MyFragment", "onDestroyView");
+        Log.i("MyFragment", "onDestroyView");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.e("MyFragment", "onDetach");
+        Log.i("MyFragment", "onDetach");
     }
 
     @Override
@@ -95,7 +95,7 @@ public class MyFragment extends Fragment {
         if (getArguments() != null) {
             mTitle = getArguments().getString(BUNDLE_TITLE);
         }
-        Log.e("MyFragment", "onCreate");
+        Log.i("MyFragment", "onCreate");
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MyFragment extends Fragment {
         textView.setText(mTitle);
         textView.setGravity(Gravity.CENTER);
 
-        Log.e("MyFragment", "onCreateView");
+        Log.i("MyFragment", "onCreateView");
         return textView;
     }
 

@@ -57,7 +57,6 @@ public class Douban2dbActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra("reload", true);
                 startActivity(intent);
             }
         });

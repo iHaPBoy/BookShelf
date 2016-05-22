@@ -1,11 +1,15 @@
 package me.icxd.bookshelve.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +46,6 @@ public class BookInfoActivity extends BaseActivity {
     private List<Fragment> mContents = new ArrayList<>();
 
     // Book
-    private long itemId;
     private Book book;
 
     // FavoriteMenu
@@ -61,7 +64,7 @@ public class BookInfoActivity extends BaseActivity {
         mContext = this;
 
         // 图书ID
-        itemId = getIntent().getExtras().getLong("id", -1);
+        int itemId = getIntent().getIntExtra("id", -1);
 
         // 图书Obj
         book = DataSupport.find(Book.class, itemId);
@@ -115,7 +118,7 @@ public class BookInfoActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_favorite:
                 book.setFavourite(!book.isFavourite());
@@ -126,6 +129,11 @@ public class BookInfoActivity extends BaseActivity {
                         .setContentText(book.isFavourite() ? "图书已收藏" : "图书已取消收藏")
                         .setConfirmText("确定")
                         .show();
+                return true;
+            case R.id.action_browser:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(book.getAlt()));
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -144,5 +152,15 @@ public class BookInfoActivity extends BaseActivity {
         MenuItem menuItem = menu.findItem(R.id.action_favorite);
         menuItem.setIcon(iconFavorite[book.isFavourite() ? 1 : 0]);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

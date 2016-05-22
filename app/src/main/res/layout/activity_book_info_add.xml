@@ -10,7 +10,13 @@
         android:id="@+id/contentPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:orientation="vertical">
+
+        <com.mingle.widget.LoadingView
+            android:id="@+id/loadView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
 
         <include
             layout="@layout/book_info"
@@ -21,7 +27,8 @@
         <Button
             android:id="@+id/btn_add"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
             android:background="@color/colorPrimary"
             android:text="保存到我的书柜"
             android:textColor="#FFFFFF"

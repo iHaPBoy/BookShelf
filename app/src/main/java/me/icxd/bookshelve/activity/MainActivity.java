@@ -86,25 +86,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 fabMenu.close(true);
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
-
-                String isbns[] = {"9787508658902", "9787518311293", "9787020105540"};
-                for (String isbn : isbns) {
-                    DataManager.getBookInfoFromISBN(isbn, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            DoubanBook doubanBook = DataManager.jsonObject2DoubanBook(response);
-                            DataManager.doubanBook2Book(doubanBook).save();
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(MainActivity.this, "书籍不存在", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-                Snackbar.make(view, "添加", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 

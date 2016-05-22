@@ -51,10 +51,8 @@ public class ScannerActivity extends BaseActivity implements ZXingScannerView.Re
             // 重新扫码
             mScannerView.resumeCameraPreview(this);
         } else {
-            Intent intent = new Intent(this, Douban2dbActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("ISBN", rawResult.getText());
-            intent.putExtras(bundle);
+            Intent intent = new Intent(this, BookInfoAddActivity.class);
+            intent.putExtra("ISBN", rawResult.getText());
             startActivity(intent);
         }
     }

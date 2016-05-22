@@ -170,6 +170,7 @@ public class DataManager {
         book_db.setSummary(book.getSummary());
         book_db.setTitle(book.getTitle());
         book_db.setUrl(book.getUrl());
+        book_db.setAlt(book.getAlt());
         book_db.setPublisher(book.getPublisher());
         book_db.setIsbn13(book.getIsbn13().isEmpty() ? book.getIsbn10() : book.getIsbn13());
         book_db.setAverage(book.getRating().getAverage());

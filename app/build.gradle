@@ -21,6 +21,9 @@ android {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -55,5 +58,5 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
 
     compile 'com.github.florent37:materialtextfield:1.0.5'
-    compile fileTree(dir: 'library')
+    compile 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
 }

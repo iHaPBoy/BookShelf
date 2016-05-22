@@ -115,6 +115,10 @@ public class ViewPagerIndicator extends HorizontalScrollView {
             params.width = getScreenWidth() / mTabVisibleCount;
             view.setLayoutParams(params);
         }
+
+        // 横线长度
+        lineLayoutParams.width = getScreenWidth() / mTabVisibleCount;
+        vLine.setLayoutParams(lineLayoutParams);
     }
 
     /**
@@ -124,6 +128,7 @@ public class ViewPagerIndicator extends HorizontalScrollView {
      */
     public void setVisibleTabCount(int count) {
         mTabVisibleCount = count;
+        onFinishInflate();
     }
 
     /**

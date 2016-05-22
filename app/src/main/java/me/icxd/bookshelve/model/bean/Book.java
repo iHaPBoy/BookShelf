@@ -2,16 +2,19 @@ package me.icxd.bookshelve.model.bean;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
+
 /**
  * Created by HaPBoy on 5/14/16.
  */
-public class Book extends DataSupport {
+public class Book extends DataSupport implements Serializable {
     private int id;
     private String subtitle;
     private String pubdate;
     private String pages;
     private String title;
     private String url;
+    private String alt;
     private String image;
     private String author_intro;
     private String summary;
@@ -75,6 +78,14 @@ public class Book extends DataSupport {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getAlt() {
+        return alt;
+    }
+
+    public void setAlt(String alt) {
+        this.alt = alt;
     }
 
     public String getImage() {

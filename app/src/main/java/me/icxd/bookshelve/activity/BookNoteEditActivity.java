@@ -22,7 +22,7 @@ public class BookNoteEditActivity extends BaseActivity {
     private Context mContext;
 
     // Book
-    private long itemId;
+    private int itemId;
     private Book book;
 
     private EditText etNote;
@@ -35,7 +35,7 @@ public class BookNoteEditActivity extends BaseActivity {
         mContext = this;
 
         // 图书ID
-        itemId = getIntent().getExtras().getLong("id", -1);
+        itemId = getIntent().getIntExtra("id", -1);
 
         // 图书Obj
         book = DataSupport.find(Book.class, itemId);
