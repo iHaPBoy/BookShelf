@@ -156,31 +156,29 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.dismissWithAnimation();
-
+//                            sDialog.dismissWithAnimation();
                             // boom
-                            mExplosionField.explode(gridItemView);
+//                            mExplosionField.explode(gridItemView);
 
                             // 刷新数据
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    gridItemView.animate().setDuration(150).alpha(1f).start();
-
+//                                    gridItemView.animate().setDuration(150).alpha(1f).start();
                                     DataSupport.delete(Book.class, bookGridAdapter.getItemId(gridPosition));
                                     fetchData();
                                     bookGridAdapter.notifyDataSetChanged();
                                 }
                             }, 800);
 
-//                            sDialog
-//                                    .setTitleText("删除成功")
-//                                    .setContentText("该本图书已被成功删除。")
-//                                    .setConfirmText("确定")
-//                                    .showCancelButton(false)
-//                                    .setConfirmClickListener(null)
-//                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            sDialog
+                                    .setTitleText("删除成功")
+                                    .setContentText("该本图书已被成功删除。")
+                                    .setConfirmText("确定")
+                                    .showCancelButton(false)
+                                    .setConfirmClickListener(null)
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                         }
                     })
                     .show();
@@ -195,29 +193,27 @@ public class BookGridFragment extends Fragment implements AdapterView.OnItemClic
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.dismissWithAnimation();
+//                            sDialog.dismissWithAnimation();
                             // boom
-                            mExplosionField.explode(gridView);
-
+//                            mExplosionField.explode(gridView);
                             // 刷新数据
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    gridView.animate().setDuration(150).alpha(1f).start();
-
+//                                    gridView.animate().setDuration(150).alpha(1f).start();
                                     DataSupport.deleteAll(Book.class);
                                     fetchData();
                                     bookGridAdapter.notifyDataSetChanged();
                                 }
                             }, 1000);
-//                            sDialog
-//                                    .setTitleText("删除成功")
-//                                    .setContentText("全部图书已被成功删除。")
-//                                    .setConfirmText("确定")
-//                                    .showCancelButton(false)
-//                                    .setConfirmClickListener(null)
-//                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            sDialog
+                                    .setTitleText("删除成功")
+                                    .setContentText("全部图书已被成功删除。")
+                                    .setConfirmText("确定")
+                                    .showCancelButton(false)
+                                    .setConfirmClickListener(null)
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                         }
                     })
                     .show();

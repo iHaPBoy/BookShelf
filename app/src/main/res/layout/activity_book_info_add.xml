@@ -12,7 +12,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/book_info" />
+        <include
+            layout="@layout/book_info"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            android:text="保存到我的书柜"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </ScrollView>

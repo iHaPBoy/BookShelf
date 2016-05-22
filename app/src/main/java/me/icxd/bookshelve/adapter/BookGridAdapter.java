@@ -16,7 +16,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.icxd.bookshelve.R;
@@ -28,32 +31,33 @@ import me.icxd.bookshelve.model.bean.Book;
  */
 public class BookGridAdapter extends BaseAdapter {
 
-    private List<Book> mData;
-    private LayoutInflater mInflater;
+    private List<Book> list;
+    private LayoutInflater inflater;
+    Context context;
 
     public BookGridAdapter(Context context) {
-        this.mInflater = LayoutInflater.from(context);
+        this.context = context;
+        list = new ArrayList<>();
+        inflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<Book> mData) {
-        this.mData = mData;
+    public void setData(List<Book> list) {
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return mData.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mData.get(position);
+        return list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-//        Log.e("HB_ADAPTER", "mData.size: " + mData.size() + "; position: " + position + ";");
-//        return 0;
-        return mData.get(position).getId();
+        return list.get(position).getId();
     }
 
     @Override
@@ -61,35 +65,37 @@ public class BookGridAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.fragment_book_grid_item, null);
+            convertView = inflater.inflate(R.layout.fragment_book_grid_item, null);
             viewHolder.ivCover = (ImageView) convertView.findViewById(R.id.iv_cover);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.rbRate = (RatingBar) convertView.findViewById(R.id.rb_rate);
             viewHolder.tvRate = (TextView) convertView.findViewById(R.id.tv_rate);
             convertView.setTag(viewHolder);
         }
-        Book bean = mData.get(position);
-        viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.tvTitle.setText(bean.getTitle());
-        viewHolder.rbRate.setRating((Float.parseFloat(bean.getAverage())/2));
-        viewHolder.tvRate.setText(bean.getAverage());
 
+        viewHolder = (ViewHolder) convertView.getTag();
+        Book bean = list.get(position);
+
+        // 设置图片
         Glide.with(viewHolder.ivCover.getContext())
                 .load(bean.getImage())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .animate(R.anim.image_in)
-//                .placeholder(R.drawable.book1)
-//                .error(R.mipmap.ic_launcher)
+                .placeholder(new IconicsDrawable(viewHolder.ivCover.getContext()).icon(GoogleMaterial.Icon.gmd_import_contacts).color(Color.GRAY).paddingDp(10))
                 .into(viewHolder.ivCover);
+
+        // 设置其他
+        viewHolder.tvTitle.setText(bean.getTitle());
+        viewHolder.rbRate.setRating((Float.parseFloat(bean.getAverage())/2));
+        viewHolder.tvRate.setText(bean.getAverage());
 
         return convertView;
     }
+}
 
-    class ViewHolder {
-        public ImageView ivCover;
-        public TextView tvTitle;
-        public RatingBar rbRate;
-        public TextView tvRate;
-    }
+class ViewHolder {
+    public ImageView ivCover;
+    public TextView tvTitle;
+    public RatingBar rbRate;
+    public TextView tvRate;
 }

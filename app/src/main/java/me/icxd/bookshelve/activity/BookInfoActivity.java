@@ -1,22 +1,15 @@
 package me.icxd.bookshelve.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import org.litepal.crud.DataSupport;
@@ -26,14 +19,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.icxd.bookshelve.R;
+import me.icxd.bookshelve.fragment.BookCoverFragment;
 import me.icxd.bookshelve.fragment.BookInfoItemFragment;
 import me.icxd.bookshelve.fragment.BookNoteFragment;
 import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.view.ViewPagerIndicator;
 
-public class BookInfoActivity extends AppCompatActivity {
+public class BookInfoActivity extends BaseActivity {
 
     private Context mContext;
 
@@ -46,7 +39,7 @@ public class BookInfoActivity extends AppCompatActivity {
     private List<String> mTitles = Arrays.asList("基本信息", "我的笔记");
 
     // Fragment
-    private List<Fragment> mContents = new ArrayList<Fragment>();
+    private List<Fragment> mContents = new ArrayList<>();
 
     // Book
     private long itemId;
@@ -104,9 +97,6 @@ public class BookInfoActivity extends AppCompatActivity {
         mViewPager.setAdapter(mPagerAdapter);
         mViewPagerIndicator.setViewPager(mViewPager, 0);
 
-        ImageView ivBookCover = (ImageView) findViewById(R.id.book_cover);
-        ImageView ivBookCoverBg = (ImageView) findViewById(R.id.book_cover_bg);
-
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -116,22 +106,9 @@ public class BookInfoActivity extends AppCompatActivity {
         // Activity标题
         setTitle(book.getTitle());
 
-        if (book != null) {
-            Glide.with(ivBookCover.getContext())
-                    .load(book.getImage())
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(new IconicsDrawable(mContext).icon(GoogleMaterial.Icon.gmd_book).color(Color.GRAY))
-                    .error(new IconicsDrawable(mContext).icon(GoogleMaterial.Icon.gmd_book).color(Color.GRAY))
-                    .into(ivBookCover);
-
-            Glide.with(ivBookCoverBg.getContext())
-                    .load(book.getImage())
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .bitmapTransform(new BlurTransformation(ivBookCoverBg.getContext(), 25, 3))
-                    .into(ivBookCoverBg);
-        }
+        // 图书封面
+        Fragment bookCoverragment = BookCoverFragment.newInstance(book.getImage());
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_book_cover, bookCoverragment).commit();
     }
 
     @Override
@@ -159,7 +136,7 @@ public class BookInfoActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.book_info_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override

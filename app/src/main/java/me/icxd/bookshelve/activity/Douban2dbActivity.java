@@ -2,7 +2,6 @@ package me.icxd.bookshelve.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,16 +22,12 @@ import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.model.bean.DoubanBook;
 import me.icxd.bookshelve.model.data.DataManager;
 
-public class Douban2dbActivity extends AppCompatActivity {
+public class Douban2dbActivity extends BaseActivity {
 
     private Context context;
-
     private Book bookData;
-
     private EditText editText;
-
     private boolean isAdded = false;
-
     private String isbn;
 
     @Override
@@ -69,7 +64,7 @@ public class Douban2dbActivity extends AppCompatActivity {
     }
 
     private void add() {
-        DataManager.getBookInfo(isbn, new Response.Listener<JSONObject>() {
+        DataManager.getBookInfoFromISBN(isbn, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 DoubanBook doubanBook = DataManager.jsonObject2DoubanBook(response);

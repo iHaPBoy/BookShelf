@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 顶部 图书封面-->
+    <FrameLayout
+        android:id="@+id/fragment_book_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+
+    <!-- ViewPagerIndicator -->
+    <me.icxd.bookshelve.view.ViewPagerIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        app:tab_line_color="@color/colorPrimary"
+        app:tab_line_height="2"
+        app:tab_text_highlight_color="@color/colorPrimary"
+        app:tab_text_normal_color="#999999"
+        app:tab_text_size="14"
+        app:tab_visible_count="2" />
+
+    <!-- ViewPager -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBg" />
+
+</LinearLayout>

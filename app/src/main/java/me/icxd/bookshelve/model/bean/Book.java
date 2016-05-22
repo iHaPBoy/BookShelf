@@ -17,6 +17,7 @@ public class Book extends DataSupport {
     private String summary;
     private String price;
     private String author;
+    private String translator;
     private String publisher;
     private String isbn13;
     private String tag1;
@@ -114,6 +115,14 @@ public class Book extends DataSupport {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getTranslator() {
+        return translator;
+    }
+
+    public void setTranslator(String translator) {
+        this.translator = translator;
     }
 
     public String getPublisher() {

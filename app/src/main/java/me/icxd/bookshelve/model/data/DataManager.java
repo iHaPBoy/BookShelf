@@ -1,5 +1,8 @@
 package me.icxd.bookshelve.model.data;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -9,6 +12,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +29,8 @@ import me.icxd.bookshelve.model.bean.DoubanBook;
  */
 public class DataManager {
 
-    // API: Get BookInfo Via ISBN13
-    public static void getBookInfo(String isbn, Response.Listener listener, Response.ErrorListener errorListener){
+    // API: Get BookInfo Via ISBN
+    public static void getBookInfoFromISBN(String isbn, Response.Listener listener, Response.ErrorListener errorListener) {
         String url = DoubanAPI.bookISBNApi + isbn;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -32,19 +39,28 @@ public class DataManager {
         MyApplication.getRequestQueue().add(jsObjRequest);
     }
 
-    // 取出全部书
-    public static List<Book> fetchData(){
-        List<Book> books = new ArrayList<>();
+    // API: Get BookSearch
+    public static void getBookSearch(String bookName, int start, Response.Listener listener, Response.ErrorListener errorListener) {
+        // URLencode
+        try {
+            bookName = URLEncoder.encode(bookName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String url = String.format(DoubanAPI.bookSearchApi, bookName, start);
+        Log.i("API", url);
 
-        List<Book> myBooks = DataSupport.findAll(Book.class);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, listener, errorListener);
 
-        return myBooks;
+        MyApplication.getRequestQueue().add(jsObjRequest);
     }
 
     // JSONObject -> DoubanBook
     public static DoubanBook jsonObject2DoubanBook(JSONObject book) {
         DoubanBook bookData = new DoubanBook();
         try {
+
             // rating
             DoubanBook.RatingEntity ratingEntity = new DoubanBook.RatingEntity();
             ratingEntity.setMax(book.getJSONObject("rating").getInt("max"));
@@ -72,7 +88,7 @@ public class DataManager {
             bookData.setId(book.getString("id"));
             bookData.setPublisher(book.getString("publisher"));
             bookData.setIsbn10(book.getString("isbn10"));
-            bookData.setIsbn13(book.getString("isbn13"));
+            bookData.setIsbn13(book.has("isbn13") ? book.getString("isbn13") : "");
             bookData.setTitle(book.getString("title"));
             bookData.setUrl(book.getString("url"));
             bookData.setAlt_title(book.getString("alt_title"));
@@ -119,16 +135,32 @@ public class DataManager {
 
         // author
         StringBuilder authorString = new StringBuilder();
-        for (int i = 0; i < book.getAuthor().size(); i++) {
-            if (i < book.getAuthor().size() - 1) {
-                authorString.append(book.getAuthor().get(i).toString());
-                authorString.append("、");
-            } else {
-                authorString.append(book.getAuthor().get(i).toString());
+        if (book.getAuthor() != null) {
+            for (int i = 0; i < book.getAuthor().size(); i++) {
+                if (i < book.getAuthor().size() - 1) {
+                    authorString.append(book.getAuthor().get(i).toString());
+                    authorString.append("、");
+                } else {
+                    authorString.append(book.getAuthor().get(i).toString());
+                }
             }
         }
-
         book_db.setAuthor(authorString.toString());
+
+        // translators
+        StringBuilder translatorString = new StringBuilder();
+        if (book.getTranslator() != null) {
+            for (int i = 0; i < book.getTranslator().size(); i++) {
+                if (i < book.getTranslator().size() - 1) {
+                    translatorString.append(book.getTranslator().get(i).toString());
+                    translatorString.append("、");
+                } else {
+                    translatorString.append(book.getTranslator().get(i).toString());
+                }
+            }
+        }
+        book_db.setTranslator(translatorString.toString());
+
         book_db.setAuthor_intro(book.getAuthor_intro());
         book_db.setImage(book.getImages().getLarge());
         book_db.setPages(book.getPages());
@@ -139,26 +171,30 @@ public class DataManager {
         book_db.setTitle(book.getTitle());
         book_db.setUrl(book.getUrl());
         book_db.setPublisher(book.getPublisher());
-        book_db.setIsbn13(book.getIsbn13());
+        book_db.setIsbn13(book.getIsbn13().isEmpty() ? book.getIsbn10() : book.getIsbn13());
         book_db.setAverage(book.getRating().getAverage());
         book_db.setFavourite(false);
         book_db.setNote("");
         book_db.setNote_date("");
-        if (book.getTags().size() >= 3) {
-            book_db.setTag1(book.getTags().get(0).getName());
-            book_db.setTag2(book.getTags().get(1).getName());
-            book_db.setTag3(book.getTags().get(2).getName());
-        } else {
-            switch (book.getTags().size()) {
-                case 0:
-                    break;
-                case 1:
-                    book_db.setTag1(book.getTags().get(0).getName());
-                    break;
-                case 2:
-                    book_db.setTag1(book.getTags().get(0).getName());
-                    book_db.setTag2(book.getTags().get(1).getName());
-                    break;
+
+        // tags
+        if (book.getTags() != null) {
+            if (book.getTags().size() >= 3) {
+                book_db.setTag1(book.getTags().get(0).getName());
+                book_db.setTag2(book.getTags().get(1).getName());
+                book_db.setTag3(book.getTags().get(2).getName());
+            } else {
+                switch (book.getTags().size()) {
+                    case 0:
+                        break;
+                    case 1:
+                        book_db.setTag1(book.getTags().get(0).getName());
+                        break;
+                    case 2:
+                        book_db.setTag1(book.getTags().get(0).getName());
+                        book_db.setTag2(book.getTags().get(1).getName());
+                        break;
+                }
             }
         }
         return book_db;

@@ -7,18 +7,34 @@
     <color name="colorBg">#FFFFFF</color>
     <color name="colorTagFont">#FFFFFF</color>
     <color name="colorPrimaryFont">#9B9B9B</color>
+
     <color name="colorPrimaryContentFont">#727272</color>
     <color name="colorPrimaryContentBg">#f8f8f8</color>
 
-
+    <!-- Grid占位图标 -->
     <color name="colorEmptyIcon">#bcbcbc</color>
     <color name="colorEmptyText">#bcbcbc</color>
 
+    <!-- Tab标签 -->
     <color name="tab_color_text_normal">#99E6EF</color>
     <color name="tab_color_text_highlight">#FFFFFF</color>
     <color name="tab_color_line">#FFFF8C</color>
 
+    <!-- 悬浮按钮 -->
     <color name="fab_menu_colorNormal">#00BCD4</color>
     <color name="fab_menu_colorPressed">#0097A7</color>
     <color name="fab_menu_colorRipple">#00c3d7</color>
+
+    <!-- Google Colors-->
+    <color name="google_blue">#4285f4</color>
+    <color name="google_red">#ea4335</color>
+    <color name="google_yellow">#fbbc05</color>
+    <color name="google_green">#34a853</color>
+
+    <!-- 搜素结果图书项 -->
+    <color name="book_item_points">#fbbc05</color>
+    <color name="book_item_price_bg">#fbbc05</color>
+    <color name="book_item_textpricecolor">#ffffff</color>
+    <color name="book_item_texttitlecolor">#111111</color>
+    <color name="book_item_textcontentcolor">#444444</color>
 </resources>

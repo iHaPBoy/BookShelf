@@ -2,7 +2,6 @@ package me.icxd.bookshelve.activity;
 
 import android.content.Context;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +17,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.model.bean.Book;
 
-public class BookNoteEditActivity extends AppCompatActivity {
+public class BookNoteEditActivity extends BaseActivity {
 
     private Context mContext;
 
