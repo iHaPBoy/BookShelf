@@ -33,9 +33,6 @@
             android:name=".activity.ScannerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.Douban2dbActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait" />
         <activity

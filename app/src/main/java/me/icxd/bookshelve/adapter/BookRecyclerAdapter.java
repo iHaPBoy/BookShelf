@@ -3,7 +3,6 @@ package me.icxd.bookshelve.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import java.util.List;
 
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.activity.BookInfoAddActivity;
-import me.icxd.bookshelve.activity.Douban2dbActivity;
 import me.icxd.bookshelve.model.bean.Book;
 
 /**

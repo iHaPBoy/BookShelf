@@ -7,11 +7,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -48,6 +52,19 @@ public class SearchActivity extends BaseActivity {
 
         // 搜索输入框
         etSearch = (EditText) findViewById(R.id.et_search);
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    hiddenKeyboard();
+                    search();
+                    // 显示加载动画View
+                    findViewById(R.id.loadView).setVisibility(View.VISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
@@ -63,7 +80,10 @@ public class SearchActivity extends BaseActivity {
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hiddenKeyboard();
                 search();
+                // 显示加载动画View
+                findViewById(R.id.loadView).setVisibility(View.VISIBLE);
             }
         });
 
@@ -88,6 +108,7 @@ public class SearchActivity extends BaseActivity {
         // 滑到底部加载更多
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             boolean isSlidingToLast = false;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -102,6 +123,7 @@ public class SearchActivity extends BaseActivity {
                     }
                 }
             }
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -133,7 +155,6 @@ public class SearchActivity extends BaseActivity {
             DataManager.getBookSearch(searchBookName, adapter.getItemCount(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    adapter.notifyDataSetChanged();
                     try {
                         total = response.getInt("total");
                         JSONArray array = response.getJSONArray("books");
@@ -148,7 +169,10 @@ public class SearchActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    adapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
+                    // 隐藏加载动画View
+                    findViewById(R.id.loadView).setVisibility(View.GONE);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -174,6 +198,15 @@ public class SearchActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void hiddenKeyboard() {
+        // 取消焦点
+        etSearch.clearFocus();
+        // 关闭输入法
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }

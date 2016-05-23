@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:hint="书名"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionSearch"
             android:padding="4dp"
             android:singleLine="true"
             android:textColor="#FFFFFF"
@@ -39,6 +39,12 @@
             android:src="@drawable/ic_search_white_24dp" />
 
     </LinearLayout>
+
+    <com.mingle.widget.LoadingView
+        android:id="@+id/loadView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/fragment_search_book_swipe"
