@@ -183,12 +183,12 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
         return true;
     }
 
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        MenuItem menuItem = menu.findItem(R.id.action_favorite);
-//        menuItem.getActionView().setVisibility(View.GONE);
-//        return super.onPrepareOptionsMenu(menu);
-//    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.action_favorite);
+        menuItem.setVisible(false);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onClick(View v) {
