@@ -59,7 +59,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerViewHo
                 .load(list.get(position).getImage())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(new IconicsDrawable(holder.bookImage.getContext()).icon(GoogleMaterial.Icon.gmd_book).color(Color.GRAY).paddingDp(10))
+                .placeholder(new IconicsDrawable(holder.bookImage.getContext()).icon(GoogleMaterial.Icon.gmd_book).colorRes(R.color.boo_item_icon).paddingDp(10))
                 .into(holder.bookImage);
 
         // 设置其他

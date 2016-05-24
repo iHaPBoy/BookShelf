@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="3.1"
         android:textSize="12sp"
-        android:textColor="@color/colorPrimaryFont"
+        android:textColor="@color/grid_rate_text"
         android:layout_below="@+id/tv_title"
         android:layout_marginLeft="4dp"
         android:layout_toEndOf="@id/rb_rate"

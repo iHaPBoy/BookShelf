@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="4dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/btn_color"
             android:text="保存到我的书柜"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />

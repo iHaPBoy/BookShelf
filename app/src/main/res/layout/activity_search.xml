@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/search_edittext_bgcolor"
             android:hint="书名"
             android:imeOptions="actionSearch"
             android:padding="4dp"

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:gravity="left|top"
-        android:hint="你在阅读中想写的批注、摘抄及随感。"
+        android:hint="@string/note_edit_hint"
         android:inputType="textMultiLine"
         android:minLines="10"
         android:padding="16dp" />

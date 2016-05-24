@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <solid android:color="@color/colorPrimary" />
+    <solid android:color="@color/book_info_item_tag_bgcolor" />
     <corners android:radius="15dp" />
     <padding
         android:left="10dp"

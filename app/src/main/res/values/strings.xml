@@ -10,6 +10,5 @@
     <string name="menu_browser">在浏览器中打开</string>
     <string name="menu_more">菜单</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="note_edit_hint">你在阅读中想写的批注、摘抄及随感。</string>
 </resources>

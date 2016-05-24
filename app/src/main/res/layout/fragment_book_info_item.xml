@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="14sp"
-        android:textColor="@color/colorTagFont"
+        android:textColor="@color/book_info_item_tag_font"
         android:background="@drawable/textview_tag_bg"
         android:textAppearance="?attr/textAppearanceListItem" />
 
@@ -22,6 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
         android:textSize="14sp"
-        android:textColor="@color/colorPrimaryFont"
+        android:textColor="@color/book_info_item_font"
         android:textAppearance="?attr/textAppearanceListItem" />
 </LinearLayout>

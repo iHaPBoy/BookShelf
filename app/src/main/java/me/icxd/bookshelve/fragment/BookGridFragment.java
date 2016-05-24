@@ -90,10 +90,10 @@ public class BookGridFragment extends Fragment {
         ImageView ivIcon = (ImageView) emptyView.findViewById(R.id.iv_icon);
         TextView tvText = (TextView) emptyView.findViewById(R.id.tv_text);
         if (type == TYPE_FAVORITE) {
-            ivIcon.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_favorite).colorRes(R.color.colorEmptyIcon).sizeDp(40));
+            ivIcon.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_favorite).colorRes(R.color.grid_empty_icon).sizeDp(40));
             tvText.setText("暂无收藏");
         } else {
-            ivIcon.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_import_contacts).colorRes(R.color.colorEmptyIcon).sizeDp(48));
+            ivIcon.setImageDrawable(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_import_contacts).colorRes(R.color.grid_empty_icon).sizeDp(48));
             tvText.setText("暂无图书");
         }
         gridView.setEmptyView(emptyView);

@@ -56,8 +56,8 @@ public class BookCoverFragment extends Fragment {
                 .load(imageUrl)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_book).color(Color.GRAY))
-                .error(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_book).color(Color.GRAY))
+                .placeholder(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_book).colorRes(R.color.boo_cover_icon))
+                .error(new IconicsDrawable(getContext()).icon(GoogleMaterial.Icon.gmd_book).colorRes(R.color.boo_cover_icon))
                 .into(ivBookCover);
 
         Glide.with(ivBookCoverBg.getContext())
