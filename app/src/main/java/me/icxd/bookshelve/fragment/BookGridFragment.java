@@ -1,5 +1,6 @@
 package me.icxd.bookshelve.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -22,13 +23,14 @@ import org.litepal.crud.DataSupport;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.icxd.bookshelve.R;
+import me.icxd.bookshelve.activity.BookInfoActivity;
 import me.icxd.bookshelve.adapter.BookGridAdapter;
 import me.icxd.bookshelve.model.bean.Book;
 
 /**
  * Created by HaPBoy on 5/18/16.
  */
-public class BookGridFragment extends Fragment {
+public class BookGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     public static final int TYPE_ALL = 1;
     public static final int TYPE_FAVORITE = 2;
@@ -74,6 +76,9 @@ public class BookGridFragment extends Fragment {
         // gridView
         gridView = (GridView) view.findViewById(R.id.gridView);
 
+        // ItemClickListener
+        gridView.setOnItemClickListener(this);
+
         // ContextMenu - 'Delete' Function
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -108,6 +113,13 @@ public class BookGridFragment extends Fragment {
         bookGridAdapter.notifyDataSetChanged();
         gridView.setAdapter(bookGridAdapter);
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), BookInfoActivity.class);
+        intent.putExtra("id", (int) bookGridAdapter.getItemId(position));
+        startActivity(intent);
     }
 
     @Override
