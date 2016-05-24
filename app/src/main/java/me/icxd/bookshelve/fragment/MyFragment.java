@@ -15,8 +15,9 @@ import android.widget.TextView;
  * Created by HaPBoy on 5/10/16.
  */
 public class MyFragment extends Fragment {
-    private String mTitle; // 传过来的title
+    
     private static final String BUNDLE_TITLE = "title"; //设置bundle的key
+    private String title; // 传过来的title
 
     /**
      * fragment一般使用newInstance方法new出实例
@@ -93,7 +94,7 @@ public class MyFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mTitle = getArguments().getString(BUNDLE_TITLE);
+            title = getArguments().getString(BUNDLE_TITLE);
         }
         Log.i("MyFragment", "onCreate");
     }
@@ -101,7 +102,7 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView textView = new TextView(getActivity());
-        textView.setText(mTitle);
+        textView.setText(title);
         textView.setGravity(Gravity.CENTER);
 
         Log.i("MyFragment", "onCreateView");

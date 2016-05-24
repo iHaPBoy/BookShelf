@@ -18,10 +18,15 @@ import me.icxd.bookshelve.adapter.BookInfoAdapter;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.model.bean.Book;
 
+/**
+ * Created by HaPBoy on 5/18/16.
+ */
 public class BookInfoItemFragment extends Fragment {
+    
     private static final String ARG_BOOK_ID = "book_id";
     private static final String ARG_BOOK = "book";
-    private Book mBook;
+    
+    private Book book;
     private List<Map<String, Object>> data;
 
     public static BookInfoItemFragment newInstance(int itemId) {
@@ -45,9 +50,9 @@ public class BookInfoItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             if (getArguments().containsKey(ARG_BOOK_ID)) {
-                mBook = DataSupport.find(Book.class, getArguments().getInt(ARG_BOOK_ID));
+                book = DataSupport.find(Book.class, getArguments().getInt(ARG_BOOK_ID));
             } else if (getArguments().containsKey(ARG_BOOK)) {
-                mBook = (Book) getArguments().getSerializable(ARG_BOOK);
+                book = (Book) getArguments().getSerializable(ARG_BOOK);
             }
         }
     }
@@ -60,32 +65,32 @@ public class BookInfoItemFragment extends Fragment {
         data = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         map.put("tag", "作者");
-        map.put("content", mBook.getAuthor());
+        map.put("content", book.getAuthor());
         data.add(map);
 
         Map<String, Object> map1 = new HashMap<>();
         map1.put("tag", "出版社");
-        map1.put("content", mBook.getPublisher());
+        map1.put("content", book.getPublisher());
         data.add(map1);
 
         Map<String, Object> map2 = new HashMap<>();
         map2.put("tag", "评分");
-        map2.put("content", mBook.getAverage());
+        map2.put("content", book.getAverage());
         data.add(map2);
 
         Map<String, Object> map3 = new HashMap<>();
         map3.put("tag", "出版年");
-        map3.put("content", mBook.getPubdate());
+        map3.put("content", book.getPubdate());
         data.add(map3);
 
         Map<String, Object> map4 = new HashMap<>();
         map4.put("tag", "定价");
-        map4.put("content", mBook.getPrice());
+        map4.put("content", book.getPrice());
         data.add(map4);
 
         Map<String, Object> map5 = new HashMap<>();
         map5.put("tag", "ISBN");
-        map5.put("content", mBook.getIsbn13());
+        map5.put("content", book.getIsbn13());
         data.add(map5);
 
         // 列表适配器

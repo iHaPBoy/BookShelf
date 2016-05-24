@@ -36,22 +36,24 @@ import me.icxd.bookshelve.model.bean.DoubanBook;
 import me.icxd.bookshelve.model.data.DataManager;
 import me.icxd.bookshelve.view.ViewPagerIndicator;
 
+/**
+ * Created by HaPBoy on 5/22/16.
+ */
 public class BookInfoAddActivity extends BaseActivity implements View.OnClickListener {
-    private Context context;
-    private String isbn;
 
-    private Context mContext;
+    // Context
+    private Context context;
 
     // ViewPager
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mPagerAdapter;
+    private ViewPager viewPager;
+    private FragmentPagerAdapter pagerAdapter;
 
     // ViewPagerIndicator
-    private ViewPagerIndicator mViewPagerIndicator;
-    private List<String> mTitles = Arrays.asList("基本信息");
+    private ViewPagerIndicator viewPagerIndicator;
+    private List<String> titles = Arrays.asList("基本信息");
 
     // Fragment
-    private List<Fragment> mContents = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
 
     // Book
     private Book book;
@@ -64,6 +66,9 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info_add);
 
+        // Context
+        context = this;
+
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -73,49 +78,50 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
         // Activity标题
         setTitle("图书详情");
 
-        context = this;
-        isbn = getIntent().getStringExtra("ISBN");
-
-//        Toast.makeText(context, "ISBN: " + isbn, Toast.LENGTH_SHORT).show();
-
         // ViewPager
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         // ViewPagerIndicator
-        mViewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
-        mViewPagerIndicator.setTabItemTitles(mTitles);
-        mViewPagerIndicator.setVisibleTabCount(1);
+        viewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
+        viewPagerIndicator.setTabItemTitles(titles);
+        viewPagerIndicator.setVisibleTabCount(1);
 
+        // 保存按钮
         btnAdd = (Button) findViewById(R.id.btn_add);
 
+        // 传入的ISBN
+        String isbn = getIntent().getStringExtra("ISBN");
+
+        // API获取图书数据
         DataManager.getBookInfoFromISBN(isbn, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 findViewById(R.id.loadView).setVisibility(View.GONE);
                 book = DataManager.doubanBook2Book(DataManager.jsonObject2DoubanBook(response));
 
-                // 设置监听器
+                // 设置保存按钮监听器
                 btnAdd.setOnClickListener(BookInfoAddActivity.this);
 
                 // 基本信息 Fragment
                 BookInfoItemFragment bookInfoItemFragment = BookInfoItemFragment.newInstance(book);
-                mContents.add(bookInfoItemFragment);
+                fragments.add(bookInfoItemFragment);
 
                 // PagerAdapter
-                mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+                pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                     @Override
                     public int getCount() {
-                        return mContents.size();
+                        return fragments.size();
                     }
 
                     @Override
                     public Fragment getItem(int position) {
-                        return mContents.get(position);
+                        return fragments.get(position);
                     }
                 };
 
-                mViewPager.setAdapter(mPagerAdapter);
-                mViewPagerIndicator.setViewPager(mViewPager, 0);
+                // 设置数据适配器
+                viewPager.setAdapter(pagerAdapter);
+                viewPagerIndicator.setViewPager(viewPager, 0);
 
                 // Activity标题
                 setTitle(book.getTitle());
@@ -132,9 +138,11 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
         });
     }
 
+    // 保存图书
     public void saveBook(Book book) {
         Boolean isAdded = false;
-        //当前数据库中所有的书籍，用来判断是否已经添加过这本书
+
+        // 遍历当前数据库中所有的书籍，用来判断是否已经添加过这本书
         List<Book> books = DataSupport.findAll(Book.class);
         for (int i = 0; i < books.size(); i++) {
             Book book_db = books.get(i);

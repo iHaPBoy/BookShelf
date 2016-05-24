@@ -1,6 +1,7 @@
 package me.icxd.bookshelve.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.icxd.bookshelve.R;
+import me.icxd.bookshelve.activity.BookInfoActivity;
 import me.icxd.bookshelve.app.MyApplication;
 import me.icxd.bookshelve.model.bean.Book;
 
@@ -61,7 +63,7 @@ public class BookGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -70,6 +72,7 @@ public class BookGridAdapter extends BaseAdapter {
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.rbRate = (RatingBar) convertView.findViewById(R.id.rb_rate);
             viewHolder.tvRate = (TextView) convertView.findViewById(R.id.tv_rate);
+            viewHolder.itemView = convertView.findViewById(R.id.item_view);
             convertView.setTag(viewHolder);
         }
 
@@ -89,6 +92,16 @@ public class BookGridAdapter extends BaseAdapter {
         viewHolder.rbRate.setRating((Float.parseFloat(bean.getAverage())/2));
         viewHolder.tvRate.setText(bean.getAverage());
 
+        // 设置点击事件
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BookInfoActivity.class);
+                intent.putExtra("id", list.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 }
@@ -98,4 +111,5 @@ class ViewHolder {
     public TextView tvTitle;
     public RatingBar rbRate;
     public TextView tvRate;
+    public View itemView;
 }

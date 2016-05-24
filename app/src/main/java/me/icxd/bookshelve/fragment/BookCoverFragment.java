@@ -21,10 +21,13 @@ import java.util.Map;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.icxd.bookshelve.R;
 
+/**
+ * Created by HaPBoy on 5/22/16.
+ */
 public class BookCoverFragment extends Fragment {
-    private String imageUrl = "";
+
     private static final String ARG_IMAGE_URL = "image_url";
-    private List<Map<String, Object>> data;
+    private String imageUrl = "";
 
     public static BookCoverFragment newInstance(String imageUrl) {
         BookCoverFragment fragment = new BookCoverFragment();
@@ -49,7 +52,6 @@ public class BookCoverFragment extends Fragment {
         ImageView ivBookCover = (ImageView) view.findViewById(R.id.book_cover);
         ImageView ivBookCoverBg = (ImageView) view.findViewById(R.id.book_cover_bg);
 
-
         Glide.with(ivBookCover.getContext())
                 .load(imageUrl)
                 .centerCrop()
@@ -65,7 +67,7 @@ public class BookCoverFragment extends Fragment {
                 .bitmapTransform(new BlurTransformation(ivBookCoverBg.getContext(), 25, 3))
                 .into(ivBookCoverBg);
 
-        // 动画
+        // 图书封面入场动画
         Animation an = AnimationUtils.loadAnimation(getContext(), R.anim.book_cover_anim);
         ivBookCover.startAnimation(an);
 

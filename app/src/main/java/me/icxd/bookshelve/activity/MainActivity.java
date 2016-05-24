@@ -37,18 +37,21 @@ import me.icxd.bookshelve.model.bean.DoubanBook;
 import me.icxd.bookshelve.model.data.DataManager;
 import me.icxd.bookshelve.view.ViewPagerIndicator;
 
+/**
+ * Created by HaPBoy on 5/11/16.
+ */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // ViewPager
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mPagerAdapter;
+    private ViewPager viewPager;
+    private FragmentPagerAdapter pagerAdapter;
 
     // ViewPagerIndicator
-    private ViewPagerIndicator mViewPagerIndicator;
-    private List<String> mTitles = Arrays.asList("全部", "收藏");
+    private ViewPagerIndicator viewPagerIndicator;
+    private List<String> titles = Arrays.asList("全部", "收藏");
 
     // Fragment
-    private List<Fragment> mContents = new ArrayList<Fragment>();
+    private List<Fragment> fragments = new ArrayList<Fragment>();
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -58,18 +61,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("INFO", "onCreate");
         setContentView(R.layout.activity_main);
 
         // 顶部ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 右下角菜单
+        // 右下角浮动菜单
         final FloatingActionMenu fabMenu = (FloatingActionMenu) findViewById(R.id.fabmenu);
         fabMenu.setClosedOnTouchOutside(true);
 
-        // 右下角按钮
+        // 右下角浮动按钮 - 扫一扫
         final FloatingActionButton fabBtnScanner = (FloatingActionButton) findViewById(R.id.fab_scanner);
         fabBtnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +81,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intent);
             }
         });
+
+        // 右下角浮动按钮 - 添加
         FloatingActionButton fabBtnAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         fabBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,30 +105,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         // ViewPager
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         // ViewPagerIndicator
-        mViewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
-        mViewPagerIndicator.setTabItemTitles(mTitles);
+        viewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
+        viewPagerIndicator.setTabItemTitles(titles);
 
         // Fragment
-        mContents.add(BookGridFragment.newInstance(BookGridFragment.TYPE_ALL));
-        mContents.add(BookGridFragment.newInstance(BookGridFragment.TYPE_FAVORITE));
+        fragments.add(BookGridFragment.newInstance(BookGridFragment.TYPE_ALL));
+        fragments.add(BookGridFragment.newInstance(BookGridFragment.TYPE_FAVORITE));
 
         // PagerAdapter
-        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+        pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
-                return mContents.size();
+                return fragments.size();
             }
 
             @Override
-            public Fragment getItem(int position) { return mContents.get(position); }
+            public Fragment getItem(int position) { return fragments.get(position); }
         };
 
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPagerIndicator.setViewPager(mViewPager, 0);
-//        mViewPager.setOffscreenPageLimit(0);
+        // 设置数据适配器
+        viewPager.setAdapter(pagerAdapter);
+        viewPagerIndicator.setViewPager(viewPager, 0);
     }
 
     @Override

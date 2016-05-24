@@ -30,9 +30,13 @@ import me.icxd.bookshelve.adapter.BookInfoAdapter;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.model.bean.Book;
 
+/**
+ * Created by HaPBoy on 5/18/16.
+ */
 public class BookNoteFragment extends Fragment {
-    private int mItemId = 1;
-    private static final String ARG_BOOK_ID = "item_id";
+
+    private static final String ARG_BOOK_ID = "book_id";
+    private int booId = 1;
 
     private TextView tvContent;
     private TextView tvDate;
@@ -50,7 +54,7 @@ public class BookNoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mItemId = getArguments().getInt(ARG_BOOK_ID);
+            booId = getArguments().getInt(ARG_BOOK_ID);
         }
     }
 
@@ -68,7 +72,7 @@ public class BookNoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), BookNoteEditActivity.class);
-                intent.putExtra("id", mItemId);
+                intent.putExtra("id", booId);
                 startActivity(intent);
             }
         });
@@ -78,7 +82,7 @@ public class BookNoteFragment extends Fragment {
 
     public void loadData() {
         // 图书数据
-        Book book = DataSupport.find(Book.class, mItemId);
+        Book book = DataSupport.find(Book.class, booId);
 
         String note = book.getNote();
         String note_date = book.getNote_date();

@@ -30,25 +30,29 @@ import me.icxd.bookshelve.fragment.BookNoteFragment;
 import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.view.ViewPagerIndicator;
 
+/**
+ * Created by HaPBoy on 5/18/16.
+ */
 public class BookInfoActivity extends BaseActivity {
 
-    private Context mContext;
+    // Context
+    private Context context;
 
     // ViewPager
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mPagerAdapter;
+    private ViewPager viewPager;
+    private FragmentPagerAdapter pagerAdapter;
 
     // ViewPagerIndicator
-    private ViewPagerIndicator mViewPagerIndicator;
-    private List<String> mTitles = Arrays.asList("基本信息", "我的笔记");
+    private ViewPagerIndicator viewPagerIndicator;
+    private List<String> titles = Arrays.asList("基本信息", "我的笔记");
 
     // Fragment
-    private List<Fragment> mContents = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
 
     // Book
     private Book book;
 
-    // FavoriteMenu
+    // 收藏按钮图片
     private int iconFavorite[] = {R.drawable.ic_favorite_border_white_24dp, R.drawable.ic_favorite_white_24dp};
 
     @Override
@@ -61,44 +65,8 @@ public class BookInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
 
-        mContext = this;
-
-        // 图书ID
-        int itemId = getIntent().getIntExtra("id", -1);
-
-        // 图书Obj
-        book = DataSupport.find(Book.class, itemId);
-
-        // ViewPager
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-
-        // ViewPagerIndicator
-        mViewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
-        mViewPagerIndicator.setTabItemTitles(mTitles);
-
-        // 基本信息 Fragment
-        BookInfoItemFragment bookInfoItemFragment = BookInfoItemFragment.newInstance(itemId);
-        mContents.add(bookInfoItemFragment);
-
-        // 我的笔记 Fragment
-        BookNoteFragment bookNoteFragment = BookNoteFragment.newInstance(itemId);
-        mContents.add(bookNoteFragment);
-
-        // PagerAdapter
-        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public int getCount() {
-                return mContents.size();
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                return mContents.get(position);
-            }
-        };
-
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPagerIndicator.setViewPager(mViewPager, 0);
+        // Context
+        context = this;
 
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
@@ -106,8 +74,46 @@ public class BookInfoActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // 图书ID
+        int itemId = getIntent().getIntExtra("id", -1);
+
+        // 图书Obj
+        book = DataSupport.find(Book.class, itemId);
+
         // Activity标题
         setTitle(book.getTitle());
+
+        // ViewPager
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+        // ViewPagerIndicator
+        viewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
+        viewPagerIndicator.setTabItemTitles(titles);
+
+        // 基本信息 Fragment
+        BookInfoItemFragment bookInfoItemFragment = BookInfoItemFragment.newInstance(itemId);
+        fragments.add(bookInfoItemFragment);
+
+        // 我的笔记 Fragment
+        BookNoteFragment bookNoteFragment = BookNoteFragment.newInstance(itemId);
+        fragments.add(bookNoteFragment);
+
+        // PagerAdapter
+        pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+        };
+
+        // 设置数据适配器
+        viewPager.setAdapter(pagerAdapter);
+        viewPagerIndicator.setViewPager(viewPager, 0);
 
         // 图书封面
         Fragment bookCoverragment = BookCoverFragment.newInstance(book.getImage());
@@ -124,7 +130,7 @@ public class BookInfoActivity extends BaseActivity {
                 book.setFavourite(!book.isFavourite());
                 book.save();
                 invalidateOptionsMenu();
-                new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
+                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
                         .setTitleText(book.isFavourite() ? "收藏成功" : "取消收藏")
                         .setContentText(book.isFavourite() ? "图书已收藏" : "图书已取消收藏")
                         .setConfirmText("确定")

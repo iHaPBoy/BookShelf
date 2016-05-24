@@ -12,22 +12,22 @@ import java.util.Map;
 import me.icxd.bookshelve.R;
 
 public class BookInfoAdapter extends BaseAdapter {
-    private List<Map<String, Object>> lstData;
+    private List<Map<String, Object>> list;
     private Activity context;
 
-    public BookInfoAdapter(Activity context, List<Map<String, Object>> lstData) {
+    public BookInfoAdapter(Activity context, List<Map<String, Object>> list) {
         this.context = context;
-        this.lstData = lstData;
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return lstData.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return lstData.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BookInfoAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Map<String, Object> data = lstData.get(position);
+        Map<String, Object> data = list.get(position);
         String tag = data.get("tag").toString();
         if (tag == null) {
             tag = "";

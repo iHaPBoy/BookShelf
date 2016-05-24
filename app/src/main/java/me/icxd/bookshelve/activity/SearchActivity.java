@@ -31,14 +31,24 @@ import me.icxd.bookshelve.app.MyApplication;
 import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.model.data.DataManager;
 
+/**
+ * Created by HaPBoy on 5/18/16.
+ */
 public class SearchActivity extends BaseActivity {
 
-    static int total = 10;
-
+    // 下拉刷新布局
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    // RecyclerView 线性布局管理器
     private LinearLayoutManager manager;
+
+    // RecyclerView 数据适配器
     private BookRecyclerAdapter adapter;
 
+    // 图书搜索结果总条数
+    static int total = 10;
+
+    // 搜索输入框
     private EditText etSearch;
     private String searchBookName;
 
@@ -47,8 +57,17 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // 返回按钮
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         // 去掉ActionBar阴影
         getSupportActionBar().setElevation(0);
+
+        // Activity标题
+        setTitle("搜索");
 
         // 搜索输入框
         etSearch = (EditText) findViewById(R.id.et_search);
@@ -56,7 +75,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    hiddenKeyboard();
+                    closeKeyboard();
                     search();
                     // 显示加载动画View
                     findViewById(R.id.loadView).setVisibility(View.VISIBLE);
@@ -66,21 +85,12 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
-        // 返回按钮
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        // Activity标题
-        setTitle("搜索");
-
         // 搜索按钮
         ImageButton ibSearch = (ImageButton) findViewById(R.id.ib_search);
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hiddenKeyboard();
+                closeKeyboard();
                 search();
                 // 显示加载动画View
                 findViewById(R.id.loadView).setVisibility(View.VISIBLE);
@@ -171,6 +181,7 @@ public class SearchActivity extends BaseActivity {
                     }
                     adapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
+
                     // 隐藏加载动画View
                     findViewById(R.id.loadView).setVisibility(View.GONE);
                 }
@@ -200,9 +211,11 @@ public class SearchActivity extends BaseActivity {
         }
     }
 
-    private void hiddenKeyboard() {
+    // 关闭软键盘
+    private void closeKeyboard() {
         // 取消焦点
         etSearch.clearFocus();
+
         // 关闭输入法
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),

@@ -17,14 +17,18 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.model.bean.Book;
 
+/**
+ * Created by HaPBoy on 5/21/16.
+ */
 public class BookNoteEditActivity extends BaseActivity {
 
-    private Context mContext;
+    // Context
+    private Context context;
 
     // Book
-    private int itemId;
     private Book book;
 
+    // 笔记输入框
     private EditText etNote;
 
     @Override
@@ -32,13 +36,8 @@ public class BookNoteEditActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_note_edit);
 
-        mContext = this;
-
-        // 图书ID
-        itemId = getIntent().getIntExtra("id", -1);
-
-        // 图书Obj
-        book = DataSupport.find(Book.class, itemId);
+        // Context
+        context = this;
 
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
@@ -46,10 +45,19 @@ public class BookNoteEditActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // 图书ID
+        int itemId = getIntent().getIntExtra("id", -1);
+
+        // 图书Obj
+        book = DataSupport.find(Book.class, itemId);
+
         // Activity标题
         setTitle("编辑笔记");
 
+        // 笔记输入框
         etNote = (EditText) findViewById(R.id.et_note);
+
+        // 显示笔记内容
         etNote.setText(book.getNote());
     }
 
@@ -63,7 +71,7 @@ public class BookNoteEditActivity extends BaseActivity {
                 book.setNote(etNote.getText().toString().trim());
                 book.setNote_date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
                 book.save();
-                new SweetAlertDialog(mContext, SweetAlertDialog.SUCCESS_TYPE)
+                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
                         .setTitleText("保存成功")
                         .setContentText("笔记已保存")
                         .setConfirmText("确定")

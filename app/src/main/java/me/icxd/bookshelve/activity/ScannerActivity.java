@@ -11,14 +11,17 @@ import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+/**
+ * Created by HaPBoy on 5/18/16.
+ */
 public class ScannerActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
 
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-        mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
-        setContentView(mScannerView);                // Set the scanner view as the content view
+        mScannerView = new ZXingScannerView(this);
+        setContentView(mScannerView);
 
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
@@ -33,24 +36,27 @@ public class ScannerActivity extends BaseActivity implements ZXingScannerView.Re
     @Override
     public void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        mScannerView.startCamera();          // Start camera on resume
+        mScannerView.setResultHandler(this);
+        mScannerView.startCamera();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mScannerView.stopCamera();           // Stop camera on pause
+        mScannerView.stopCamera();
     }
 
     @Override
     public void handleResult(Result rawResult) {
         // 判断是否是EAN13码
         if (rawResult.getBarcodeFormat() != BarcodeFormat.EAN_13) {
+            // 提示错误
             Toast.makeText(this, "不是ISBN条形码", Toast.LENGTH_SHORT).show();
+
             // 重新扫码
             mScannerView.resumeCameraPreview(this);
         } else {
+            // 显示图书添加界面
             Intent intent = new Intent(this, BookInfoAddActivity.class);
             intent.putExtra("ISBN", rawResult.getText());
             startActivity(intent);
