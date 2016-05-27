@@ -30,10 +30,10 @@ public class BookInfoItemFragment extends Fragment {
     private Book book;
     private List<TagItem> data;
 
-    public static BookInfoItemFragment newInstance(int itemId) {
+    public static BookInfoItemFragment newInstance(int bookId) {
         BookInfoItemFragment fragment = new BookInfoItemFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_BOOK_ID, itemId);
+        args.putInt(ARG_BOOK_ID, bookId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,9 +66,12 @@ public class BookInfoItemFragment extends Fragment {
         data = new ArrayList<>();
         data.add(new TagItem("作者", book.getAuthor()));
         data.add(new TagItem("出版社", book.getPublisher()));
-        data.add(new TagItem("评分", book.getAverage()));
+        if (!book.getOrigin_title().isEmpty()) data.add(new TagItem("原作名", book.getOrigin_title()));
+        if (!book.getTranslator().isEmpty()) data.add(new TagItem("译者", book.getTranslator()));
         data.add(new TagItem("出版年", book.getPubdate()));
+        data.add(new TagItem("页数", book.getPages()));
         data.add(new TagItem("定价", book.getPrice()));
+        if (!book.getBinding().isEmpty()) data.add(new TagItem("装帧", book.getBinding()));
         data.add(new TagItem("ISBN", book.getIsbn13()));
 
         // 列表适配器

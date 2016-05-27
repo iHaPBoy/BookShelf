@@ -12,6 +12,9 @@ public class Book extends DataSupport implements Serializable {
     private String subtitle;
     private String pubdate;
     private String pages;
+    private String origin_title;
+    private String binding;
+    private String catalog;
     private String title;
     private String url;
     private String alt;
@@ -62,6 +65,30 @@ public class Book extends DataSupport implements Serializable {
 
     public void setPages(String pages) {
         this.pages = pages;
+    }
+
+    public String getOrigin_title() {
+        return origin_title;
+    }
+
+    public void setOrigin_title(String origin_title) {
+        this.origin_title = origin_title;
+    }
+
+    public String getBinding() {
+        return binding;
+    }
+
+    public void setBinding(String binding) {
+        this.binding = binding;
+    }
+
+    public String getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(String catalog) {
+        this.catalog = catalog;
     }
 
     public String getTitle() {

@@ -6,13 +6,13 @@
     <color name="colorPrimaryBg">#ffffff</color>
 
     <!-- 内容字体 -->
-    <color name="colorPrimaryContentFont">#9B9B9B</color>
+    <color name="colorPrimaryContentFont">#444444</color>
     <color name="colorPrimaryContentBg">#f8f8f8</color>
 
     <!-- Tab标签 -->
     <color name="tab_color_text_normal">#99E6EF</color>
     <color name="tab_color_text_highlight">#ffffff</color>
-    <color name="tab_color_line">#FFFF8C</color>
+    <color name="tab_color_line">#ffffff</color>
 
     <!-- 悬浮按钮 -->
     <color name="fab_menu_colorNormal">@color/colorPrimary</color>
@@ -41,14 +41,21 @@
     <!-- 图书添加页 -->
     <color name="btn_color">@color/colorPrimary</color>
 
+
+    <!-- 图书详情 -->
+    <color name="book_info_bg">@color/colorPrimaryBg</color>
+
     <!-- 图书基本信息 Fragment -->
     <color name="book_info_item_tag_font">#ffffff</color>
     <color name="book_info_item_tag_bgcolor">@color/colorPrimary</color>
     <color name="book_info_item_font">@color/colorPrimaryContentFont</color>
-    <color name="book_info_bg">@color/colorPrimaryBg</color>
+
+    <!-- 图书简介信息 Fragment -->
+    <color name="book_intro_tag_font">@color/colorPrimary</color>
+    <color name="book_intro_font">@color/colorPrimaryContentFont</color>
 
     <!-- 图书笔记信息 Fragment -->
-    <color name="book_note_font">@color/colorPrimaryContentFont</color>
+    <color name="book_note_tag_font">#9B9B9B</color>
 
     <!-- Google Colors-->
     <color name="google_blue">#4285f4</color>

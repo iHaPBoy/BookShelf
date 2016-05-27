@@ -26,10 +26,16 @@
         <item name="fab_colorRipple">@color/fab_menu_colorRipple</item>
     </style>
 
-    <style name="RatingBar_Yellow" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_yellow</item>
-        <item name="android:minHeight">15dp</item>
-        <item name="android:maxHeight">15dp</item>
+    <style name="RatingBar_Yellow_Small" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_yellow_small</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:maxHeight">14dp</item>
+    </style>
+
+    <style name="RatingBar_Yellow_Middle" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_yellow_middle</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
     </style>
 
 </resources>

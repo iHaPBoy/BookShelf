@@ -21,7 +21,7 @@
                 android:layout_width="16dp"
                 android:layout_height="20dp"
                 android:layout_alignParentLeft="true"
-                app:ico_color="@color/book_note_font"
+                app:ico_color="@color/book_note_tag_font"
                 app:ico_icon="gmd-date-range"
                 app:ico_size="16dp" />
 
@@ -34,7 +34,7 @@
                 android:layout_toRightOf="@id/iv_icon_date"
                 android:gravity="center_vertical"
                 android:text="日期"
-                android:textColor="@color/book_note_font" />
+                android:textColor="@color/book_note_tag_font" />
 
             <ImageView
                 android:id="@+id/iv_edit"
@@ -42,7 +42,7 @@
                 android:layout_height="20dp"
                 android:layout_alignBaseline="@id/iv_icon_date"
                 android:layout_alignParentRight="true"
-                app:ico_color="@color/book_note_font"
+                app:ico_color="@color/book_note_tag_font"
                 app:ico_icon="gmd-mode-edit"
                 app:ico_size="16dp" />
         </RelativeLayout>

@@ -164,6 +164,9 @@ public class DataManager {
         book_db.setAuthor_intro(book.getAuthor_intro());
         book_db.setImage(book.getImages().getLarge());
         book_db.setPages(book.getPages());
+        book_db.setOrigin_title(book.getOrigin_title());
+        book_db.setBinding(book.getBinding());
+        book_db.setCatalog(book.getCatalog());
         book_db.setPrice(book.getPrice());
         book_db.setPubdate(book.getPubdate());
         book_db.setSubtitle(book.getSubtitle());

@@ -26,6 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.fragment.BookCoverFragment;
 import me.icxd.bookshelve.fragment.BookInfoItemFragment;
+import me.icxd.bookshelve.fragment.BookIntroFragment;
 import me.icxd.bookshelve.fragment.BookNoteFragment;
 import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.view.ViewPagerIndicator;
@@ -44,7 +45,7 @@ public class BookInfoActivity extends BaseActivity {
 
     // ViewPagerIndicator
     private ViewPagerIndicator viewPagerIndicator;
-    private List<String> titles = Arrays.asList("基本信息", "我的笔记");
+    private List<String> titles = Arrays.asList("基本信息", "图书简介", "我的笔记");
 
     // Fragment
     private List<Fragment> fragments = new ArrayList<>();
@@ -75,10 +76,10 @@ public class BookInfoActivity extends BaseActivity {
         }
 
         // 图书ID
-        int itemId = getIntent().getIntExtra("id", -1);
+        int bookId = getIntent().getIntExtra("id", -1);
 
         // 图书Obj
-        book = DataSupport.find(Book.class, itemId);
+        book = DataSupport.find(Book.class, bookId);
 
         // Activity标题
         setTitle(book.getTitle());
@@ -89,14 +90,16 @@ public class BookInfoActivity extends BaseActivity {
         // ViewPagerIndicator
         viewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
         viewPagerIndicator.setTabItemTitles(titles);
+        viewPagerIndicator.setVisibleTabCount(3);
 
         // 基本信息 Fragment
-        BookInfoItemFragment bookInfoItemFragment = BookInfoItemFragment.newInstance(itemId);
-        fragments.add(bookInfoItemFragment);
+        fragments.add(BookInfoItemFragment.newInstance(bookId));
+
+        // 图书简介 Fragment
+        fragments.add(BookIntroFragment.newInstance(bookId));
 
         // 我的笔记 Fragment
-        BookNoteFragment bookNoteFragment = BookNoteFragment.newInstance(itemId);
-        fragments.add(bookNoteFragment);
+        fragments.add(BookNoteFragment.newInstance(bookId));
 
         // PagerAdapter
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -116,7 +119,7 @@ public class BookInfoActivity extends BaseActivity {
         viewPagerIndicator.setViewPager(viewPager, 0);
 
         // 图书封面
-        Fragment bookCoverragment = BookCoverFragment.newInstance(book.getImage());
+        Fragment bookCoverragment = BookCoverFragment.newInstance(bookId);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_book_cover, bookCoverragment).commit();
     }
 

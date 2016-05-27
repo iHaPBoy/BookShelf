@@ -30,6 +30,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.fragment.BookCoverFragment;
 import me.icxd.bookshelve.fragment.BookInfoItemFragment;
+import me.icxd.bookshelve.fragment.BookIntroFragment;
 import me.icxd.bookshelve.fragment.MyFragment;
 import me.icxd.bookshelve.model.bean.Book;
 import me.icxd.bookshelve.model.bean.DoubanBook;
@@ -50,7 +51,7 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
 
     // ViewPagerIndicator
     private ViewPagerIndicator viewPagerIndicator;
-    private List<String> titles = Arrays.asList("基本信息");
+    private List<String> titles = Arrays.asList("基本信息", "图书简介");
 
     // Fragment
     private List<Fragment> fragments = new ArrayList<>();
@@ -84,7 +85,7 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
         // ViewPagerIndicator
         viewPagerIndicator = (ViewPagerIndicator) findViewById(R.id.indicator);
         viewPagerIndicator.setTabItemTitles(titles);
-        viewPagerIndicator.setVisibleTabCount(1);
+        viewPagerIndicator.setVisibleTabCount(2);
 
         // 保存按钮
         btnAdd = (Button) findViewById(R.id.btn_add);
@@ -103,8 +104,10 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
                 btnAdd.setOnClickListener(BookInfoAddActivity.this);
 
                 // 基本信息 Fragment
-                BookInfoItemFragment bookInfoItemFragment = BookInfoItemFragment.newInstance(book);
-                fragments.add(bookInfoItemFragment);
+                fragments.add(BookInfoItemFragment.newInstance(book));
+
+                // 图书简介 Fragment
+                fragments.add(BookIntroFragment.newInstance(book));
 
                 // PagerAdapter
                 pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -127,7 +130,7 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
                 setTitle(book.getTitle());
 
                 // 图书封面
-                Fragment bookCoverragment = BookCoverFragment.newInstance(book.getImage());
+                Fragment bookCoverragment = BookCoverFragment.newInstance(book);
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_book_cover, bookCoverragment).commit();
             }
         }, new Response.ErrorListener() {

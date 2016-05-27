@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/tag"
-        android:minWidth="68dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:textColor="@color/book_info_item_tag_font"
         android:background="@drawable/textview_tag_bg"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:gravity="center"
+        android:minWidth="68dp"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/book_info_item_tag_font"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
-        android:textSize="14sp"
+        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/book_info_item_font"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textSize="14sp" />
 </LinearLayout>

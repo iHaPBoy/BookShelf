@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内容简介"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/book_intro_tag_font"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  · · · · · ·"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/book_intro_tag_font"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="1.25"
+        android:text="内容"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/book_intro_font"
+        android:textSize="14sp" />
+</LinearLayout>
