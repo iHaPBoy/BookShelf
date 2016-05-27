@@ -64,9 +64,9 @@ public class BookGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        BookGridViewHolder viewHolder;
         if (convertView == null) {
-            viewHolder = new ViewHolder();
+            viewHolder = new BookGridViewHolder();
             convertView = inflater.inflate(R.layout.fragment_book_grid_item, null);
             viewHolder.ivCover = (ImageView) convertView.findViewById(R.id.iv_cover);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
@@ -75,7 +75,7 @@ public class BookGridAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
-        viewHolder = (ViewHolder) convertView.getTag();
+        viewHolder = (BookGridViewHolder) convertView.getTag();
         Book bean = list.get(position);
 
         // 设置图片
@@ -95,7 +95,7 @@ public class BookGridAdapter extends BaseAdapter {
     }
 }
 
-class ViewHolder {
+class BookGridViewHolder {
     public ImageView ivCover;
     public TextView tvTitle;
     public RatingBar rbRate;

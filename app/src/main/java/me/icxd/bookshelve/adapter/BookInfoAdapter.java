@@ -1,6 +1,9 @@
 package me.icxd.bookshelve.adapter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,14 +13,17 @@ import java.util.List;
 import java.util.Map;
 
 import me.icxd.bookshelve.R;
+import me.icxd.bookshelve.model.bean.TagItem;
 
 public class BookInfoAdapter extends BaseAdapter {
-    private List<Map<String, Object>> list;
-    private Activity context;
+    private List<TagItem> list;
+    private LayoutInflater inflater;
+    private Context context;
 
-    public BookInfoAdapter(Activity context, List<Map<String, Object>> list) {
+    public BookInfoAdapter(Context context, List<TagItem> list) {
         this.context = context;
         this.list = list;
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -37,36 +43,26 @@ public class BookInfoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
-
+        BookInfoViewHolder holder;
         if (convertView == null) {
-            convertView = context.getLayoutInflater().inflate(R.layout.fragment_book_info_item, null);
-            holder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.fragment_book_info_item, null);
+            holder = new BookInfoViewHolder();
             holder.tvTag = (TextView) convertView.findViewById(R.id.tag);
             holder.tvContent = (TextView) convertView.findViewById(R.id.content);
-
             convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
         }
 
-        Map<String, Object> data = list.get(position);
-        String tag = data.get("tag").toString();
-        if (tag == null) {
-            tag = "";
-        }
-        String content = data.get("content").toString();
-        if (content == null) {
-            content = "";
-        }
-        holder.tvTag.setText(tag);
-        holder.tvContent.setText(content);
+        holder = (BookInfoViewHolder) convertView.getTag();
+        TagItem data = list.get(position);
+
+        holder.tvTag.setText(data.getTag());
+        holder.tvContent.setText(data.getContent());
 
         return convertView;
     }
+}
 
-    private final class ViewHolder {
-        TextView tvTag;
-        TextView tvContent;
-    }
+class BookInfoViewHolder {
+    TextView tvTag;
+    TextView tvContent;
 }

@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_scanner"
+        android:icon="@drawable/ic_menu_scanner"
+        android:title="扫一扫" />
+    <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/ic_menu_add"
+        android:title="添加" />
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_menu_setting"
+        android:title="设置" />
+</group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+<item android:title="交流">
+    <menu>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_about"
+            android:title="关于" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_menu_feedback"
+            android:title="反馈" />
+    </menu>
+</item>
 
 </menu>
+
