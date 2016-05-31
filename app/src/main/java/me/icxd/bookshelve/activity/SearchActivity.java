@@ -24,6 +24,9 @@ import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 import me.icxd.bookshelve.R;
 import me.icxd.bookshelve.adapter.BookRecyclerAdapter;
@@ -35,6 +38,11 @@ import me.icxd.bookshelve.model.data.DataManager;
  * Created by HaPBoy on 5/18/16.
  */
 public class SearchActivity extends BaseActivity {
+
+    public static int SEARCH_LOCAL = 0;
+    public static int SEARCH_NET = 1;
+
+    private int search_type = SEARCH_LOCAL;
 
     // 下拉刷新布局
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -57,6 +65,9 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // 搜索类型
+        search_type = getIntent().getIntExtra("search_type", SEARCH_NET);
+
         // 返回按钮
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -67,7 +78,7 @@ public class SearchActivity extends BaseActivity {
         getSupportActionBar().setElevation(0);
 
         // Activity标题
-        setTitle("搜索");
+        setTitle(search_type == SEARCH_LOCAL ? "查找" : "搜索");
 
         // 搜索输入框
         etSearch = (EditText) findViewById(R.id.et_search);
@@ -75,10 +86,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    closeKeyboard();
-                    search();
-                    // 显示加载动画View
-                    findViewById(R.id.loadView).setVisibility(View.VISIBLE);
+                    click();
                     return true;
                 }
                 return false;
@@ -90,10 +98,7 @@ public class SearchActivity extends BaseActivity {
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeKeyboard();
-                search();
-                // 显示加载动画View
-                findViewById(R.id.loadView).setVisibility(View.VISIBLE);
+                click();
             }
         });
 
@@ -146,12 +151,25 @@ public class SearchActivity extends BaseActivity {
         });
     }
 
+    // 点击搜索
+    private void click() {
+        // 关闭软键盘
+        closeKeyboard();
+
+        // 搜索
+        search();
+    }
+
     // 执行搜索
     public void search() {
         if (!etSearch.getText().toString().trim().isEmpty()) {
             searchBookName = etSearch.getText().toString().trim().replace(" ", "\b");
             adapter.clear();
             adapter.notifyDataSetChanged();
+            // 显示加载动画View
+            if (findViewById(R.id.loadView).getVisibility() != View.VISIBLE) {
+                findViewById(R.id.loadView).setVisibility(View.VISIBLE);
+            }
             get();
         } else {
             Toast.makeText(this, "请输入要搜索的内容", Toast.LENGTH_SHORT).show();
@@ -161,38 +179,62 @@ public class SearchActivity extends BaseActivity {
 
     // 获取数据
     public void get() {
-        if (adapter.getItemCount() < total) {
-            DataManager.getBookSearch(searchBookName, adapter.getItemCount(), new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        total = response.getInt("total");
-                        JSONArray array = response.getJSONArray("books");
-                        Log.i("API", "total: " + total + ", books.size: " + array.length());
-                        if (total == 0) {
-                            Toast.makeText(MyApplication.getContext(), "找不到图书", Toast.LENGTH_SHORT).show();
-                        }
-                        for (int j = 0; j < array.length(); j++) {
-                            Book data = DataManager.doubanBook2Book(DataManager.jsonObject2DoubanBook(array.getJSONObject(j)));
-                            adapter.add(data);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    adapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
+        if (search_type == SEARCH_LOCAL) {
+            List<Book> books = DataSupport.where("title like ?", "%" + searchBookName + "%").find(Book.class);
+            Log.i("SEARCH", "books.size: " + books.size());
+            adapter.setData(books);
+            adapter.notifyDataSetChanged();
+            if (books.size() == 0) {
+                Toast.makeText(MyApplication.getContext(), "找不到图书", Toast.LENGTH_SHORT).show();
+            }
 
-                    // 隐藏加载动画View
-                    findViewById(R.id.loadView).setVisibility(View.GONE);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(MyApplication.getContext(), "搜索失败，请重试", Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            });
+            // 隐藏加载动画View
+            findViewById(R.id.loadView).setVisibility(View.GONE);
+        } else if (search_type == SEARCH_NET) {
+            if (adapter.getItemCount() < total) {
+                DataManager.getBookSearch(searchBookName, adapter.getItemCount(), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            total = response.getInt("total");
+                            JSONArray array = response.getJSONArray("books");
+                            Log.i("API", "total: " + total + ", books.size: " + array.length());
+                            if (total == 0) {
+                                Toast.makeText(MyApplication.getContext(), "找不到图书", Toast.LENGTH_SHORT).show();
+                            }
+                            for (int j = 0; j < array.length(); j++) {
+                                Book data = DataManager.doubanBook2Book(DataManager.jsonObject2DoubanBook(array.getJSONObject(j)));
+                                adapter.add(data);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+
+                        // 隐藏加载动画View
+                        findViewById(R.id.loadView).setVisibility(View.GONE);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MyApplication.getContext(), "搜索失败，请重试", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
         }
+    }
+
+    // 关闭软键盘
+    private void closeKeyboard() {
+        // 取消焦点
+        etSearch.clearFocus();
+
+        // 关闭输入法
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override
@@ -209,17 +251,6 @@ public class SearchActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    // 关闭软键盘
-    private void closeKeyboard() {
-        // 取消焦点
-        etSearch.clearFocus();
-
-        // 关闭输入法
-        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }

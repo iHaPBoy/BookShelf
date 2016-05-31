@@ -16,10 +16,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import me.icxd.bookshelve.R;
+import me.icxd.bookshelve.activity.BookInfoActivity;
 import me.icxd.bookshelve.activity.BookInfoAddActivity;
 import me.icxd.bookshelve.model.bean.Book;
 
@@ -41,6 +44,11 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerViewHo
     public void add(Book bookData) {
         list.add(bookData);
         notifyItemInserted(list.size() - 1);
+    }
+
+    public void setData(List<Book> booksData) {
+        list.clear();
+        list.addAll(booksData);
     }
 
     public void clear() {
@@ -82,9 +90,18 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BookInfoAddActivity.class);
-                intent.putExtra("ISBN", list.get(position).getIsbn13());
-                context.startActivity(intent);
+                List<Book> books = DataSupport.where("isbn13 = ?", list.get(position).getIsbn13()).find(Book.class);
+                // 如果图书已添加
+                if (books.size() > 0) {
+                    Intent intent = new Intent(context, BookInfoActivity.class);
+                    intent.putExtra("id", books.get(0).getId());
+                    context.startActivity(intent);
+                } else {
+                    // 图书未添加，跳转到添加页面
+                    Intent intent = new Intent(context, BookInfoAddActivity.class);
+                    intent.putExtra("ISBN", list.get(position).getIsbn13());
+                    context.startActivity(intent);
+                }
             }
         });
     }

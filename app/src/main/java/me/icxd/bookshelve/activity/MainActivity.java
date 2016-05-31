@@ -153,12 +153,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             startActivity(intent);
         } else if (id == R.id.nav_add) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            intent.putExtra("search_type", SearchActivity.SEARCH_NET);
             startActivity(intent);
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_search) {
-
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            intent.putExtra("search_type", SearchActivity.SEARCH_LOCAL);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
