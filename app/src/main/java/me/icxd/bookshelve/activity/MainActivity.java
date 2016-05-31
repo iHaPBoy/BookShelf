@@ -123,7 +123,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
 
             @Override
-            public Fragment getItem(int position) { return fragments.get(position); }
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
         };
 
         // 设置数据适配器
@@ -152,11 +154,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_add) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_setting) {
-
         } else if (id == R.id.nav_about) {
-
-        } else if (id == R.id.nav_feedback) {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_search) {
 
         }
 

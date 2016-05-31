@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="书柜">
+
+        <Preference
+            android:key="introduction"
+            android:summary="一款用于管理个人图书及笔记的应用"
+            android:title="应用介绍" />
+
+        <Preference
+            android:key="currentVersion"
+            android:summary="1.0.0"
+            android:title="当前版本" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="关于作者">
+        <Preference
+            android:key="author"
+            android:summary="陈晓东"
+            android:title="作者" />
+
+        <Preference
+            android:key="email"
+            android:summary="ihapboy@gmail.com"
+            android:title="邮箱" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="版权">
+
+        <Preference
+            android:summary="豆瓣"
+            android:title="图书数据来源" />
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -38,7 +38,12 @@
         <activity
             android:name=".activity.BookNoteEditActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.BookInfoAddActivity"></activity>
+        <activity
+            android:name=".activity.BookInfoAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

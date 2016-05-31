@@ -4,4 +4,5 @@
     <item name="ic_menu_setting" type="drawable">@android:drawable/ic_menu_manage</item>
     <item name="ic_menu_about" type="drawable">@android:drawable/ic_menu_share</item>
     <item name="ic_menu_feedback" type="drawable">@android:drawable/ic_menu_send</item>
+    <item name="ic_menu_search" type="drawable">@android:drawable/ic_menu_search</item>
 </resources>
