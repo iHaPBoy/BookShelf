@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,10 +14,33 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <com.mingle.widget.LoadingView
+        <RelativeLayout
             android:id="@+id/loadView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/avloadingIndicatorView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:indicator="BallScaleMultiple"
+                app:indicator_color="@color/colorAccent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/errorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加载失败，请返回重试"/>
+        </RelativeLayout>
 
         <include
             layout="@layout/book_info"

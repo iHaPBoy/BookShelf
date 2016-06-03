@@ -93,6 +93,9 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
         // 传入的ISBN
         String isbn = getIntent().getStringExtra("ISBN");
 
+        // 显示加载动画View
+        startLoadingAnim();
+
         // API获取图书数据
         DataManager.getBookInfoFromISBN(isbn, new Response.Listener<JSONObject>() {
             @Override
@@ -132,11 +135,18 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
                 // 图书封面
                 Fragment bookCoverragment = BookCoverFragment.newInstance(book);
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_book_cover, bookCoverragment).commit();
+
+                stopLoadingAnim();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "图书不存在或网络连接错误", Toast.LENGTH_SHORT).show();
+
+                stopLoadingAnim();
+
+                // 显示错误信息View
+                findViewById(R.id.errorView).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -185,6 +195,14 @@ public class BookInfoAddActivity extends BaseActivity implements View.OnClickLis
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startLoadingAnim() {
+        findViewById(R.id.loadView).setVisibility(View.VISIBLE);
+    }
+
+    private void stopLoadingAnim() {
+        findViewById(R.id.loadView).setVisibility(View.GONE);
     }
 
     @Override

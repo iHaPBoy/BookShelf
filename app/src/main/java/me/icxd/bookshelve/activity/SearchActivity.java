@@ -166,10 +166,7 @@ public class SearchActivity extends BaseActivity {
             searchBookName = etSearch.getText().toString().trim().replace(" ", "\b");
             adapter.clear();
             adapter.notifyDataSetChanged();
-            // 显示加载动画View
-            if (findViewById(R.id.loadView).getVisibility() != View.VISIBLE) {
-                findViewById(R.id.loadView).setVisibility(View.VISIBLE);
-            }
+            startLoadingAnim();
             get();
         } else {
             Toast.makeText(this, "请输入要搜索的内容", Toast.LENGTH_SHORT).show();
@@ -184,12 +181,12 @@ public class SearchActivity extends BaseActivity {
             Log.i("SEARCH", "books.size: " + books.size());
             adapter.setData(books);
             adapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
+            stopLoadingAnim();
+
             if (books.size() == 0) {
                 Toast.makeText(MyApplication.getContext(), "找不到图书", Toast.LENGTH_SHORT).show();
             }
-
-            // 隐藏加载动画View
-            findViewById(R.id.loadView).setVisibility(View.GONE);
         } else if (search_type == SEARCH_NET) {
             if (adapter.getItemCount() < total) {
                 DataManager.getBookSearch(searchBookName, adapter.getItemCount(), new Response.Listener<JSONObject>() {
@@ -211,15 +208,14 @@ public class SearchActivity extends BaseActivity {
                         }
                         adapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
-
-                        // 隐藏加载动画View
-                        findViewById(R.id.loadView).setVisibility(View.GONE);
+                        stopLoadingAnim();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MyApplication.getContext(), "搜索失败，请重试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "搜索失败，请检查网络连接", Toast.LENGTH_SHORT).show();
                         swipeRefreshLayout.setRefreshing(false);
+                        stopLoadingAnim();
                     }
                 });
             }
@@ -235,6 +231,14 @@ public class SearchActivity extends BaseActivity {
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void startLoadingAnim() {
+        findViewById(R.id.loadView).setVisibility(View.VISIBLE);
+    }
+
+    private void stopLoadingAnim() {
+        findViewById(R.id.loadView).setVisibility(View.GONE);
     }
 
     @Override
