@@ -5,7 +5,7 @@
 
         <Preference
             android:key="introduction"
-            android:summary="一款用于管理个人图书及笔记的应用"
+            android:summary="小而美的图书阅读管理助手"
             android:title="应用介绍" />
 
         <Preference
@@ -18,7 +18,7 @@
     <PreferenceCategory android:title="关于作者">
         <Preference
             android:key="author"
-            android:summary="陈晓东"
+            android:summary="HaPBoy"
             android:title="作者" />
 
         <Preference
